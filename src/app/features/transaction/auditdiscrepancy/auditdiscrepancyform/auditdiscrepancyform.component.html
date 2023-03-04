@@ -1,0 +1,108 @@
+<div class="card card-info" style="height: calc(100% - 5px);">
+                        <div class="card-header">
+                            <h3 class="card-title">Audit Discrepancy</h3>
+                        </div>
+                        <!-- /.card-header -->
+                        <!-- form start -->
+                        <form [formGroup]="auditdiscrepancyform" class="form-horizontal">
+                            <div style="align-content: center;margin-left: 5px;margin-top: 5px;">
+                                <button type="button" (click)="ShowGrid()" class="btn btn-primary">
+                  Back
+                </button>
+                                <div *ngIf="error" style="color: red;font-weight: bold;">{{error}}</div>
+                            </div>
+                            <!-- <div>
+                                <jw-modal id="custom-modal-1">
+                                    <org-fat-assetregisterform class="content-wrapper popupside"></org-fat-assetregisterform>
+                                    <button (click)="closeModal('custom-modal-1');">Close</button>
+                                </jw-modal>
+                            </div> -->
+                            <div class="col-12" style="margin-top: 10px;">
+                                <div class="card card-primary card-tabs">
+                                    <div class="card-header p-0 pt-1">
+                                        <ul class="nav nav-tabs" id="custom-tabs-one-tab" role="tablist">
+                                            <li class="nav-item">
+                                                <a class="nav-link active" id="custom-tabs-one-home-tab" data-toggle="pill" href="#custom-tabs-one-home" role="tab" aria-controls="custom-tabs-one-home" aria-selected="true">Location Discrepancy ({{ locationDiscrepancyCount }})</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" id="custom-tabs-one-profile-tab" data-toggle="pill" href="#custom-tabs-one-profile" role="tab" aria-controls="custom-tabs-one-profile" aria-selected="false">Missing Assets ({{ missingAssetsCount }})</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" id="custom-tabs-one-messages-tab" data-toggle="pill" href="#custom-tabs-one-messages" role="tab" aria-controls="custom-tabs-one-messages" aria-selected="false">New Assets ({{ newAssetsCount }})</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" id="custom-tabs-one-found-tab" data-toggle="pill" href="#custom-tabs-one-found" role="tab" aria-controls="custom-tabs-one-found" aria-selected="false">Found ({{ foundCount }})</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" id="custom-tabs-one-disabled-tab" data-toggle="pill" href="#custom-tabs-one-disabled" role="tab" aria-controls="custom-tabs-one-disabled" aria-selected="false">Disabled Items ({{ disableCount }})</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="tab-content" id="custom-tabs-one-tabContent">
+                                            <div class="tab-pane fade show active" id="custom-tabs-one-home" role="tabpanel" aria-labelledby="custom-tabs-one-home-tab">
+                                                <div>
+                                                    <button type="button" [disabled]="loading || isbtnSaveDisabled" (click)="AcceptLocationChange()" [hidden]="!locationRowClicked" class="btn btn-success btn-sm mb-2">
+                            <!-- <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1 mb-1"></span> -->
+                            Accept Location Change
+                          </button>
+                                                </div>
+                                                <ag-grid-angular #agGridLocation style="width: 100%; height: 28vw;" class="ag-theme-alpine" [rowData]="rowAuditLocationDiscrepancyData" [columnDefs]="columnReceiptDefs" rowSelection="multiple" cellSelection="none" animateRows="true" defaultColDef="defaultColDef"
+                                                    (rowClicked)="onLocationRowClick($event)" (selectionChanged)="onDataGridSelectionChanged($event)" suppressCellSelection="true">
+                                                </ag-grid-angular>
+                                            </div>
+                                            <div class="tab-pane fade" id="custom-tabs-one-profile" role="tabpanel" aria-labelledby="custom-tabs-one-profile-tab">
+                                                <div>
+                                                    <button type="button" [disabled]="loading || isbtnSaveDisabled" [hidden]="!missingRowClicked" (click)="InActivateSerialNo()" class="btn btn-success btn-sm mb-2">
+                            <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1 mb-1"></span>
+                            In Activate
+                          </button>
+                                                </div>
+                                                <ag-grid-angular #agGridMissing style="width: 100%; height: 28vw;" (selectionChanged)="onMissingDataGridSelectionChanged($event)" class="ag-theme-alpine" [rowData]="rowAuditMissingData" [columnDefs]="columnReceiptDefs" rowSelection="multiple" cellSelection="none" animateRows="true" defaultColDef="defaultColDef" suppressCellSelection="true">
+                                                </ag-grid-angular>
+                                            </div>
+
+                                            <div class="tab-pane fade" id="custom-tabs-one-messages" role="tabpanel" aria-labelledby="custom-tabs-one-messages-tab">
+                                                <div>
+                                                    <!-- [hidden]="!isNewAssetsRowClicked" -->
+                                                    <button type="button" [disabled]="loading || isbtnSaveDisabled" hidden="true" class="btn btn-success btn-sm mb-2" (click)="openModal('custom-modal-1')">
+                            <!-- <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1 mb-1"></span> -->
+                            Register
+                          </button>
+                                                    <div *ngIf="error" style="color: red;font-weight: bold;">{{error}}</div>
+                                                </div>
+                                                <ag-grid-angular #agGridNew style="width: 100%; height: 28vw;" class="ag-theme-alpine" [rowData]="rowAuditNewData" [columnDefs]="columnReceiptDefs" rowSelection="single" cellSelection="none" animateRows="true" defaultColDef="defaultColDef" (click)="onNewAssetsRowClick($event)"
+                                                    suppressCellSelection="true">
+                                                </ag-grid-angular>
+                                            </div>
+                                            <div class="tab-pane fade" id="custom-tabs-one-found" role="tabpanel" aria-labelledby="custom-tabs-one-found-tab">
+                                                <div>
+                                                    <div *ngIf="error" style="color: red;font-weight: bold;">{{error}}</div>
+                                                </div>
+                                                <ag-grid-angular #agGridfound style="width: 100%; height: 28vw;" class="ag-theme-alpine" [rowData]="rowAuditFound" [columnDefs]="columnReceiptDefs" rowSelection="single" cellSelection="none" animateRows="true" defaultColDef="defaultColDef" (click)="onNewAssetsRowClick($event)"
+                                                    suppressCellSelection="true">
+                                                </ag-grid-angular>
+                                            </div>
+
+                                            <div class="tab-pane fade" id="custom-tabs-one-disabled" role="tabpanel" aria-labelledby="custom-tabs-one-disabled-tab">
+                                                <div>
+                                                    <button type="button" [disabled]="loading || isbtnSaveDisabled" [hidden]="!disabledRowClicked" (click)="ActivateSerialNo()" class="btn btn-success btn-sm mb-2">
+                            <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1 mb-1"></span>
+                           Activate
+                          </button>
+                                                </div>
+                                                <ag-grid-angular #agGridDisabled style="width: 100%; height: 28vw;" (selectionChanged)="onDisabledDataGridSelectionChanged($event)" class="ag-theme-alpine" [rowData]="rowAuditDisabled" [columnDefs]="columnReceiptDefs" rowSelection="multiple" cellSelection="none" animateRows="true" defaultColDef="defaultColDef" suppressCellSelection="true">
+                                                </ag-grid-angular>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <!-- /.card -->
+                                </div>
+                            </div>
+
+                        </form>
+
+
+                    </div>
+

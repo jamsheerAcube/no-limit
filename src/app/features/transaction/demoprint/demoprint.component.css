@@ -1,0 +1,11 @@
+.body{
+    overflow-y: auto;
+    border-radius: 5px;
+    margin: 0 auto;
+}
+
+.info-lable{
+    font-weight: bold;
+    font-size: 14px;
+    color: #00008b;
+}

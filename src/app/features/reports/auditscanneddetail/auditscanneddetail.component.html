@@ -1,0 +1,246 @@
+
+<div class="card card-info"  >
+    <div class="card-header">
+      <h3 class="card-title">Audit Scanned Detail Report</h3>
+  
+    </div>
+    <form [formGroup]="AuditScannedDetailReportForm" class="form-horizontal">
+    <div class="card-body" >
+         
+        <div class="row form-group">
+            <div class="col-sm-3">
+              <label  for="item">From Date</label>
+              <input type="date" formControlName="FromDate" class="form-control" id="FromDate" name="FromDate" />
+            </div>
+           
+          <div class="col-sm-3">
+            <label  for="batch">To Date</label>
+            <input type="date" formControlName="ToDate" class="form-control" id="ToDate" name="ToDate" />
+          </div>
+                                   
+        </div> 
+        <div class="row form-group">    
+            <button type="reset" class="btn btn-info">
+              <span class="fa fa-refresh"></span> Reset
+          </button>  
+              <button type="submit" class="btn btn-primary" (click)="onSearchClick()">
+                  <span class="fa fa-search"></span> Search
+              </button>  
+            
+          </div>
+          
+            <div class="row" style="overflow: auto;">
+              <kendo-grid #kendogrid
+              [filter]="filter"
+              [filterable]="true"
+              (filterChange)="filterChange($event)"
+  [kendoGridBinding]="gridView"
+        [pageSize]="10"
+        [pageable]="true"
+        [resizable]="true"
+        [sortable]="true"
+        [selectable]="true"
+        [height]="600"
+        [columnMenu]="{ filter: true }"
+      >
+      <ng-template kendoGridToolbarTemplate>
+          <button kendoGridPDFCommand icon="file-pdf">Export to PDF</button>
+          <button kendoGridExcelCommand icon="file-excel">Export to Excel</button>
+        </ng-template>
+      <kendo-grid-column [width]="150"
+  field="auditId"
+  title="Audit ID">
+  <ng-template kendoGridCellTemplate let-dataItem>
+    <a href="javascript:void(0)"  style="text-decoration: underline;color: blue;" (click)="ShowItemDetail(dataItem)" > {{dataItem.auditId}}</a>
+  </ng-template>
+  </kendo-grid-column>
+      <!-- filter="numeric" -->
+        <kendo-grid-column [width]="200"
+        field="auditStatusText"
+        title="Audit Status"
+      ></kendo-grid-column>
+      <kendo-grid-column [width]="200"
+      field="createdBy"
+      title="Created By"
+    ></kendo-grid-column>
+    <kendo-grid-column [width]="200"
+    field="toBeAuditedOn"
+    title="Audit Planned On">
+    <ng-template kendoGridCellTemplate let-dataItem>
+        {{dataItem.toBeAuditedOn | date: 'dd-MM-yyyy'}}
+      </ng-template>
+</kendo-grid-column>
+  <kendo-grid-column [width]="200"
+  field="remark"
+  title="Remark"
+  ></kendo-grid-column>
+  <kendo-grid-column [width]="200"
+  field="releasedBy"
+  title="Released By"
+  ></kendo-grid-column>
+  <kendo-grid-column [width]="200"
+  field="releasedDate"
+  title="Released Date">
+  <ng-template kendoGridCellTemplate let-dataItem>
+      {{dataItem.releasedDate | date: 'dd-MM-yyyy'}}
+    </ng-template>
+</kendo-grid-column>
+<kendo-grid-column [width]="200"
+field="closedBy"
+title="Closed By"
+></kendo-grid-column>
+<kendo-grid-column [width]="200"
+field="closedDate"
+title="Closed Date">
+<ng-template kendoGridCellTemplate let-dataItem>
+    {{dataItem.closedDate | date: 'dd-MM-yyyy'}}
+  </ng-template>
+</kendo-grid-column>
+  <kendo-grid-column [width]="150"
+  field="totalAssigned"
+  title="Total Assigned"
+  ></kendo-grid-column>
+  <kendo-grid-column [width]="150"
+  field="found"
+  title="Found"
+  ></kendo-grid-column>
+  <kendo-grid-column [width]="150"
+  field="missing"
+  title="Missing"
+  ></kendo-grid-column>
+  <kendo-grid-column [width]="150"
+  field="newAssets"
+  title="New"
+  ></kendo-grid-column>
+  <kendo-grid-column [width]="150"
+  field="locationMismatch"
+  title="Location Mismatch"
+  ></kendo-grid-column>
+        <kendo-grid-pdf
+        fileName="AuditSummary.pdf"
+        [allPages]="true"
+        [repeatHeaders]="true"
+      ></kendo-grid-pdf>
+      <kendo-grid-excel
+      [fetchData]="allData"
+      fileName="AuditSummary.xlsx"
+     
+    ></kendo-grid-excel>
+  </kendo-grid>
+            </div>
+  
+            <div class="row">
+            <kendo-window
+            [(top)]="windowTop"
+            [(left)]="windowLeft"
+            title="Audit Details"
+            *ngIf="opened"
+            (close)="close()"
+            [minWidth]="250"
+            [width]="1200"
+          >
+            <form class="k-form">
+              <div class="row" style="overflow: auto;">
+                <kendo-grid #kendogriddetail
+                [filter]="filter"
+                [filterable]="true"
+                (filterChange)="filterChangedetails($event)"
+    [kendoGridBinding]="gridViewdetails"
+          [pageable]="false"
+          [resizable]="true"
+          [sortable]="true"
+          [selectable]="true"
+          [height]="500"
+          [columnMenu]="{ filter: true }"
+        >
+        <ng-template kendoGridToolbarTemplate>
+            <button kendoGridPDFCommand icon="file-pdf">Export to PDF</button>
+            <button kendoGridExcelCommand icon="file-excel">Export to Excel</button>
+          </ng-template>
+        <kendo-grid-column [width]="150"
+    field="auditId"
+    title="Audit Id">
+    </kendo-grid-column>
+    <kendo-grid-column [width]="150"
+    field="serialNo"
+    title="Serial No">
+    </kendo-grid-column>
+    <kendo-grid-column [width]="150"
+    field="statusText"
+    title="Status">
+    </kendo-grid-column>
+    <kendo-grid-column [width]="200"
+    field="scannedBy"
+    title="Scanned By">
+    </kendo-grid-column>
+    <kendo-grid-column [width]="150"
+    field="scannedDate"
+    title="Scanned Date">
+    <ng-template kendoGridCellTemplate let-dataItem>
+        {{dataItem.scannedDate | date: 'dd-MM-yyyy HH:mm:ss'}}
+      </ng-template>
+    </kendo-grid-column>
+    <kendo-grid-column [width]="200"
+    field="orgCode"
+    title="Org Code">
+    </kendo-grid-column>
+    <kendo-grid-column [width]="200"
+    field="orgName"
+    title="Org Name">
+    </kendo-grid-column>
+    <kendo-grid-column [width]="200"
+    field="locationCode"
+    title="Location Code">
+    </kendo-grid-column>
+    <kendo-grid-column [width]="250"
+    field="locationName"
+    title="Location Name">
+    </kendo-grid-column>
+    <kendo-grid-column [width]="200"
+    field="scanLocationCode"
+    title="Scanned LocationCode">
+    </kendo-grid-column>
+    <kendo-grid-column [width]="250"
+    field="scanLocationName"
+    title="Scanned LocationName">
+    </kendo-grid-column>
+    <kendo-grid-column [width]="200"
+    field="itemCode"
+    title="Item Code">
+    </kendo-grid-column>
+    <kendo-grid-column [width]="250"
+    field="itemName"
+    title="Item Name">
+    </kendo-grid-column>
+    <kendo-grid-column [width]="250"
+    field="loT_NUMBER"
+    title="LOT NUMBER">
+    </kendo-grid-column>
+    <kendo-grid-column [width]="200"
+    field="supplierLotNumber"
+    title="Supplier LOT NUMBER">
+    </kendo-grid-column>
+    
+    supplierLotNumber
+    <kendo-grid-column [width]="200" field="expiratioN_DATE" title="Expiration Date">
+      <ng-template kendoGridCellTemplate let-dataItem>
+        {{dataItem.expiratioN_DATE | date: 'dd-MM-yyyy'}}
+      </ng-template>
+    </kendo-grid-column>
+          <kendo-grid-pdf
+          fileName="AuditDetails.pdf"
+          [allPages]="true"
+          [repeatHeaders]="true"
+        ></kendo-grid-pdf>
+        <kendo-grid-excel
+        fileName="AuditDetails.xlsx"
+       
+      ></kendo-grid-excel>
+    </kendo-grid>
+              </div>
+            </form>
+          </kendo-window>
+        </div>
+    </div>
+  </form>
+  </div>

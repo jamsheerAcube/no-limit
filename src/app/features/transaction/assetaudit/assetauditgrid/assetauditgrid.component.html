@@ -1,0 +1,15 @@
+<div class="card-header">
+    <h3 class="card-title">Physical Count</h3>
+</div>
+<button (click)="OnRefreshCick();" class="btn btn-info btn-sm">Refresh</button>
+<button (click)="btnNewClick()" [ngClass]="{'btn btn-info btn-sm': true, 'd-none': !isCreateAllowed}">New</button>
+<button (click)="OnEditClick()" [ngClass]="{'btn btn-info btn-sm': true, 'd-none': isRowUnSelected || !isEditAllowed}" [disabled]="isAuditApproved">Edit</button>
+<button (click)="OnReleasedClick()" [ngClass]="{'btn btn-info btn-sm': true, 'd-none': isRowUnSelected || !isEditAllowed}" [disabled]="isAuditApproved">Release
+    <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1 mb-1"></span>
+</button>
+<button (click)="OnViewClick()" [ngClass]="{'btn btn-info btn-sm': true, 'd-none': isRowUnSelected || !isViewAllowed}">View</button>
+<button (click)="OnCloseClick()" [ngClass]="{'btn btn-info btn-sm': true, 'd-none': isRowUnSelected || !isEditAllowed}" [disabled]="isAuditClosed">Close</button>
+<button (click)="OnVerifyClick()" [ngClass]="{'btn btn-info btn-sm': true, 'd-none': isRowUnSelected || !isVerifyAllowed}" [disabled]="isAuditClosed">Verify</button>
+<button (click)="OnAssetSummaryClickClick()" [ngClass]="{'btn btn-info btn-sm': true, 'd-none': isRowUnSelected || !isViewAllowed}">Audit SnapShot Summary</button>
+<button (click)="OnAuditVarianceClick()" [ngClass]="{'btn btn-info btn-sm': true, 'd-none': isRowUnSelected || !isViewAllowed}">Audit Variance Report</button>
+<org-fat-grid [entity]="name"></org-fat-grid>

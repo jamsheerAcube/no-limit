@@ -1,0 +1,124 @@
+<!-- <div class="card card-info" style="height: calc(100% - 5px);width: 100%; min-width: max-content;"> -->
+    <!-- <div class="card-header">
+        <h3 class="card-title">{{ reportTitle }}</h3>
+    </div> -->
+    <form [formGroup]="reportFilterForm" class="form-horizontal">
+        <div>
+            <button type="button" (click)="ViewReport()" [disabled]="loading || isbtnSaveDisabled"
+                class="btn btn-success btn-sm">
+                <i class="fa fa-eye" aria-hidden="true"></i> View
+            </button>
+            <!-- <button type="button" (click)="ClearContents()" [disabled]=" isbtnClearDisabled "
+                class="btn btn-primary btn-sm">
+                <i class="fa fa-broom " aria-hidden="true "></i> Clear
+            </button> -->
+            <div *ngIf="error" style="color: red;font-weight: bold;">{{error}}</div>
+        </div>
+        <!-- <div class="card-body"> -->
+            <div class="row">
+                <div class="columns-24">
+                    <div class="row form-group">
+                        <label class="columns-24 col-form-label" style="margin-right: 10px;">Select Filter
+                        </label>
+                        <div class="columns-24" style="min-width: 200px;">
+                            <select class="select2" multiple="multiple" style="width: 100%;"
+                                formControlName="SelectFilters" name="SelectFilters">
+                                <option *ngFor="let x of reportFilters; let i = index" value="{{ x }}">
+                                    {{ ReportFilterTypes[x] }}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+            <div class="row columns-24 " style="margin-top: 10px;margin-left: 5px;">
+                <!-- <div class="columns-24">
+                    <label class="columns-24 col-form-label" style="color: transparent;margin-right: 10px;">Select Filter
+                    </label>
+                </div> -->
+                <div style="margin-right: 10px;min-width: 300px;" *ngIf="selectedFilterValues.indexOf(ReportFilterTypes.Category) > -1">
+                    <label class=" col-form-label">Select Category Name</label>
+                    <ngx-treeview [config]="treeviewConfig" [items]="itemscategoryList"
+                        (selectedChange)="onCategorySelectionChange($event)" *ngIf="!render">
+                    </ngx-treeview>
+                </div>
+                <div style="margin-right: 10px;min-width: 300px;"
+                    *ngIf="selectedFilterValues.indexOf(ReportFilterTypes.Subcategory) > -1">
+                    <label class=" col-form-label">Select Sub Category Name</label>
+                    <ngx-treeview [config]="treeviewConfig" [items]="itemsList"
+                        (selectedChange)="onSubCategorySelectionChange($event)" *ngIf="!render">
+                    </ngx-treeview>
+                </div>
+                <div style="margin-right: 10px;min-width: 300px;"
+                    *ngIf="selectedFilterValues.indexOf(ReportFilterTypes.Product) > -1">
+                    <label class=" col-form-label">Select Product Name</label>
+                    <ngx-treeview [config]="treeviewConfig" [items]="productList"
+                        (selectedChange)="onProductSelectionChange($event)" *ngIf="!render">
+                    </ngx-treeview>
+                </div>
+                <div style="margin-right: 10px;min-width: 300px" *ngIf="selectedFilterValues.indexOf(ReportFilterTypes.Brand) > -1">
+                    <label class=" col-form-label">Select Brand Name</label>
+                    <ngx-treeview [config]="treeviewConfig" [items]="itemsBrandList"
+                        (selectedChange)="onBrandSelectionChange($event)" *ngIf="!render">
+                    </ngx-treeview>
+                </div>
+                <div style="margin-right: 10px;min-width: 300px" *ngIf="selectedFilterValues.indexOf(ReportFilterTypes.Model) > -1">
+                    <label class=" col-form-label">Select Model Name</label>
+                    <ngx-treeview [config]="treeviewConfig" [items]="itemsModelList"
+                        (selectedChange)="onModelSelectionChange($event)" *ngIf="!render">
+                    </ngx-treeview>
+                </div>
+                <div style="margin-right: 10px;min-width: 300px" *ngIf="selectedFilterValues.indexOf(ReportFilterTypes.Site) > -1">
+                    <label class=" col-form-label">Select Site Name</label>
+                    <ngx-treeview [config]="treeviewConfig" [items]="itemsSiteList"
+                        (selectedChange)="onSiteSelectionChange($event)" *ngIf="!render">
+                    </ngx-treeview>
+                </div>
+                <div style="margin-right: 10px;min-width: 300px" *ngIf="selectedFilterValues.indexOf(ReportFilterTypes.Building) > -1">
+                    <label class=" col-form-label">Select Building Name</label>
+                    <ngx-treeview [config]="treeviewConfig" [items]="itemsBuildingList"
+                        (selectedChange)="onBuildingSelectionChange($event)" *ngIf="!render">
+                    </ngx-treeview>
+                </div>
+                <div style="margin-right: 10px;min-width: 300px" *ngIf="selectedFilterValues.indexOf(ReportFilterTypes.Floor) > -1">
+                    <label class=" col-form-label">Select Floor Name</label>
+                    <ngx-treeview [config]="treeviewConfig" [items]="itemsFloorList"
+                        (selectedChange)="onFloorSelectionChange($event)" *ngIf="!render">
+                    </ngx-treeview>
+                </div>
+                <div style="margin-right: 10px;min-width: 300px" *ngIf="selectedFilterValues.indexOf(ReportFilterTypes.Room) > -1">
+                    <label class=" col-form-label">Select Room Name</label>
+                    <ngx-treeview [config]="treeviewConfig" [items]="itemsRoomList"
+                        (selectedChange)="onRoomSelectionChange($event)" *ngIf="!render">
+                    </ngx-treeview>
+                </div>
+                <div style="margin-right: 10px;min-width: 300px" *ngIf="selectedFilterValues.indexOf(ReportFilterTypes.Location) > -1">
+                    <label class=" col-form-label">Select Location Name</label>
+                    <ngx-treeview #treeView [config]="treeviewConfig" [items]="itemsLocationList"
+                        (selectedChange)="onLocationSelectionChange($event)" *ngIf="!render">
+                    </ngx-treeview>
+                </div>
+                <div style="margin-right: 10px;min-width: 300px" *ngIf="selectedFilterValues.indexOf(ReportFilterTypes.AssetStatus) > -1">
+                    <label class=" col-form-label">Select Asset Status</label>
+                    <ngx-treeview #treeView [config]="treeviewConfig" [items]="itemsAssetStatusList"
+                        (selectedChange)="onAssetStatusSelectionChange($event)" *ngIf="!render">
+                    </ngx-treeview>
+                </div>
+                <div style="margin-right: 10px;min-width: 300px" *ngIf="selectedFilterValues.indexOf(ReportFilterTypes.Department) > -1">
+                    <label class=" col-form-label">Select Department Name</label>
+                    <ngx-treeview #treeView [config]="treeviewConfig" [items]="itemsDepartmentList"
+                        (selectedChange)="onDepartmentSelectionChange($event)" *ngIf="!render">
+                    </ngx-treeview>
+                </div>
+                <div style="margin-right: 10px;min-width: 300px" *ngIf="selectedFilterValues.indexOf(ReportFilterTypes.Employee) > -1">
+                    <label class=" col-form-label">Select Employee Name</label>
+                    <ngx-treeview #treeView [config]="treeviewConfig" [items]="itemsEmployeeList"
+                        (selectedChange)="onEmployeeSelectionChange($event)" *ngIf="!render">
+                    </ngx-treeview>
+                </div>
+            </div>
+        <!-- </div> -->
+    </form>
+<!-- </div> -->

@@ -1,0 +1,60 @@
+
+          <div class="card card-info">
+            <div class="card-header">
+              <h3 class="card-title">User Role Permission</h3>
+            </div>
+            <!-- /.card-header -->
+            <!-- form start -->
+            <form [formGroup]="UserRolePermissionForm" class="form-horizontal">
+              
+                <div class="card-body col-sm-8">
+                  <div class="row form-group">
+                    <label class="col-sm-2 col-form-label" for="inputEmail3">User Role *</label>
+                    <div class="col-sm-4">
+                        <select class="form-control select2bs4 select2-hidden-accessible" style="width: 100%;" formControlName="UserRoleSelCode" [ngClass]="{ 'is-invalid': submitted && UserRolePermissionFormControls.UserRoleSelCode.errors }" name="UserRoleSelCode" required>
+                            <option selected="selected"></option>
+                            <option *ngFor="let x of userroles" value="{{ x.id }}">
+                                {{ x.roleName }}
+                            </option>
+                        </select>
+
+                    <div *ngIf="UserRolePermissionFormControls.UserRoleSelCode.errors" class="invalid-feedback">
+                        <div *ngIf="submitted && UserRolePermissionFormControls.UserRoleSelCode.errors.required">User Role is required</div>
+                    </div>
+                    </div>
+                  
+                  </div>
+                  <div class="row form-group">
+                    <label class="col-sm-2 col-form-label" for="inputEmail3">Menu List *</label>
+                    <div class="col-sm-4">
+                        <ngx-treeview [config]="treeviewConfig" [items]="itemsList" (selectedChange)="onSubCategorySelectionChange($event)"  *ngIf="!render">
+                        </ngx-treeview>
+                    </div>
+                   
+                  
+                  </div>
+                </div>
+                <!-- /.card-body -->
+          
+              <!-- /.row -->
+  
+              <div class="card-footer" style="align-content: center;">
+                <button type="button" (click)="SaveUserpermission()" [disabled]="loading || isbtnSaveDisabled"
+                  class="btn btn-success btn-sm mr-1 ml-1 mt-2 mb-2">
+                  <!-- <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1 mb-1"></span> -->
+                  Save
+                </button>
+                <!-- <button type="button" (click)="ShowGrid()" class="btn btn-primary btn-sm mr-1 ml-1 mt-2 mb-2">
+                  Back
+                </button> -->
+                <button type="button" (click)=ClearContents() [disabled]="isbtnClearDisabled" class="btn btn-info btn-sm mr-1 ml-1 mt-2 mb-2">
+                  Clear
+                </button>
+                <div *ngIf="error" style="color: red;font-weight: bold;">{{error}}</div>
+              </div>
+               
+            </form>
+  
+  
+          </div>
+  

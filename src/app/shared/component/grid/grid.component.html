@@ -1,0 +1,17 @@
+<!-- <ag-grid-angular #agGrid style="width: 100%; height: calc(100% - 75px);" class="ag-theme-alpine" [rowData]="rowData" [columnDefs]="columnDefs" rowSelection="single" cellSelection="none" animateRows=true suppressCellSelection="true" (rowClicked)="onRowClick($event)"
+    (onGridReady)="onGridReady($event)" nFirstDataRendered="onFirstDataRendered"  [pagination]="true"
+    [paginationPageSize]="10"
+   >
+</ag-grid-angular> -->
+
+<ag-grid-angular #agGrid
+    style="width: 100%;  height: calc(100vh - 150px);"
+    class="ag-theme-alpine"
+    [rowData]="rowData"
+    [columnDefs]="columnDefs"
+    [pagination]="true"
+    [paginationPageSize]="10"
+    rowSelection="single" cellSelection="none"
+     animateRows=true suppressCellSelection="true" (rowClicked)="onRowClick($event)"
+     (onGridReady)="onGridReady($event)" nFirstDataRendered="onFirstDataRendered">
+</ag-grid-angular>

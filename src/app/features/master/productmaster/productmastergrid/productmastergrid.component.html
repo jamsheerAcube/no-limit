@@ -1,0 +1,33 @@
+<div class="card-header">
+    <h3 class="card-title">Product Master</h3>
+</div>
+<div class="row">
+    <div class="col-sm-4">
+        <button (click)="OnRefreshCick();" class="btn btn-info btn-sm">Refresh</button>
+        <button (click)="btnNewClick()"
+            [ngClass]="{'btn btn-info btn-sm': true, 'd-none': !isCreateAllowed}">New</button>
+        <button (click)="OnEditClick()"
+            [ngClass]="{'btn btn-info btn-sm': true, 'd-none': isRowUnSelected || !isEditAllowed}">Edit</button>
+        <button (click)="OnViewClick()"
+            [ngClass]="{'btn btn-info btn-sm': true, 'd-none': isRowUnSelected || !isViewAllowed}">View</button>
+        <button (click)="OnDeleteClick()"
+            [ngClass]="{'btn btn-info btn-sm': true, 'd-none': isRowUnSelected || !isDeleteAllowed}">Inactivate</button>
+    </div>
+    <div class="col-sm-8">
+        <div class="row">
+            <label class="col-sm-1 col-form-label">Locations</label>
+            <div class="col-sm-4">
+                <div style="height:18px">
+                <select class="form-control select2bs4 select2-hidden-accessible" style="width: 100%;"
+                    name="LocationsCode">
+                    <option selected="selected"></option>
+                    <option *ngFor="let x of Locations" value="{{ x.locationID }}">
+                        {{ x.locationCode }} - {{ x.locationName }}
+                    </option>
+                </select>
+            </div>
+            </div>
+        </div>
+    </div>
+</div>
+<org-fat-grid [entity]="name" [selectedLocation]="selectedLocation"></org-fat-grid>

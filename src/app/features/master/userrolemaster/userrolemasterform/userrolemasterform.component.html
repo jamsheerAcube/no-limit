@@ -1,0 +1,66 @@
+
+          <div class="card card-info">
+            <div class="card-header">
+              <h3 class="card-title">User Role Master</h3>
+            </div>
+            <!-- /.card-header -->
+            <!-- form start -->
+            <form [formGroup]="UserRoleMasterForm" class="form-horizontal">
+              
+                <div class="card-body col-sm-8">
+                  <div class="row form-group">
+                    <label class="col-sm-4 col-form-label" for="inputEmail3">Role Name *</label>
+                    <div class="col-sm-6">
+                      <input type="text" formControlName="RoleName" class="form-control" maxlength="50"
+                       [ngClass]="{ 'is-invalid': submitted && UserRoleMasterFormControls.RoleName.errors }"
+                      pattern="^[a-zA-Z0-9\s]+$" />
+                      <div *ngIf="submitted && UserRoleMasterFormControls.RoleName.errors" class="invalid-feedback">
+                                  <div *ngIf="UserRoleMasterFormControls.RoleName.errors.required">Role Name is required</div>
+                                  <div *ngIf="UserRoleMasterFormControls.RoleName.errors.pattern && UserRoleMasterFormControls.RoleName.dirty && UserRoleMasterFormControls.RoleName.invalid">Special Characters are not allowed.</div>
+                              </div>
+                    </div>
+                  
+                  </div>
+                  <!-- <div class="row form-group">
+                    <label class="col-sm-4 col-form-label" for="inputEmail3">Role Type *</label>
+                    <div class="col-sm-6">
+                      <select  formControlName="RoleType" id="RoleType"
+                      name="RoleType"
+                          class="form-control"
+                          [ngClass]="{ 'is-invalid': submitted && UserRoleMasterFormControls.RoleType.errors }">
+                          <option value="Web User">Web User</option>
+                          <option value="POS User">POS User</option>
+                          <option value="Mobile User">Mobile User</option>
+                      </select>
+                      <div *ngIf="submitted && UserRoleMasterFormControls.RoleType.errors" class="invalid-feedback">
+                                  <div *ngIf="UserRoleMasterFormControls.RoleType.errors.required">Role Type is required</div>
+                                  <div *ngIf="UserRoleMasterFormControls.RoleType.errors.pattern && UserRoleMasterFormControls.RoleType.dirty && UserRoleMasterFormControls.RoleType.invalid">Special Characters are not allowed.</div>
+                              </div>
+                    </div>
+                  
+                  </div> -->
+                </div>
+                <!-- /.card-body -->
+          
+              <!-- /.row -->
+  
+              <div class="card-footer" style="align-content: center;">
+                <button type="button" (click)="SaveUserRoleMaster()" [disabled]="loading || isbtnSaveDisabled"
+                  class="btn btn-success btn-sm mr-1 ml-1 mt-2 mb-2">
+                  <!-- <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1 mb-1"></span> -->
+                  Save
+                </button>
+                <button type="button" (click)="ShowGrid()" class="btn btn-primary btn-sm mr-1 ml-1 mt-2 mb-2">
+                  Back
+                </button>
+                <button type="button" (click)=ClearContents() [disabled]="isbtnClearDisabled" class="btn btn-info btn-sm mr-1 ml-1 mt-2 mb-2">
+                  Clear
+                </button>
+                <div *ngIf="error" style="color: red;font-weight: bold;">{{error}}</div>
+              </div>
+               
+            </form>
+  
+  
+          </div>
+  

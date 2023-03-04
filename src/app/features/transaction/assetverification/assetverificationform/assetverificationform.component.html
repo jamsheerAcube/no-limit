@@ -1,0 +1,90 @@
+<div class="card card-info" style="height: calc(100% - 5px);">
+    <div class="card-header">
+        <h3 class="card-title">Asset Verification</h3>
+    </div>
+    <form [formGroup]="assetVerificationForm" class="form-horizontal" style="height: 100%;">
+        <div>
+            <!-- <button type="button" (click)="SaveAssetVerification(50)" [disabled]="loading || isbtnSaveDisabled" class="btn btn-success btn-sm">                                    
+                                    Approve
+                                </button>
+            <button type="button" (click)="SaveAssetVerification(40)" class="btn btn-danger btn-sm">
+                                    Hold
+                                </button> -->
+            <button type="button" (click)="ShowGrid()" class="btn btn-info btn-sm">
+                                    Back
+                                </button>
+            <button type="button" (click)="ClearContents()" [disabled]="isbtnClearDisabled" class="btn btn-info btn-sm">
+                                    Clear
+                                </button>
+            <div *ngIf="error" style="color: red;font-weight: bold;">{{error}}</div>
+        </div>
+        <div class="card-body col-md-12">
+            <div class="row">
+                <div class="col">
+                    <div class="row form-group">
+                        <label class="col-sm-4 col-form-label">Receipt No*</label>
+                        <div class="col-sm-6">
+                            <input type="text" formControlName="ReceiptNo" class="form-control" [ngClass]="{ 'is-invalid': submitted && assetVerificationFormControls.ReceiptNo.errors }" />
+                            <div *ngIf="submitted && assetVerificationFormControls.ReceiptNo.errors" class="invalid-feedback">
+                                <div *ngIf="submitted && assetVerificationFormControls.ReceiptNo.errors.required">
+                                    Document No is required</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row form-group">
+                        <label class="col-sm-4 col-form-label">Document No
+                                                *</label>
+                        <div class="col-sm-6">
+                            <input type="text" formControlName="DocumentNo" class="form-control" [ngClass]="{ 'is-invalid': submitted && assetVerificationFormControls.DocumentNo.errors }" />
+                            <div *ngIf="submitted && assetVerificationFormControls.DocumentNo.errors" class="invalid-feedback">
+                                <div *ngIf="submitted && assetVerificationFormControls.DocumentNo.errors.required">
+                                    Document No is required</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row form-group">
+                        <label class="col-sm-4 col-form-label">Verifier Remarks
+                                                *</label>
+                        <div class="col-sm-6">
+                            <input type="text" formControlName="VerifierRemarks" class="form-control" [ngClass]="{ 'is-invalid': submitted && assetVerificationFormControls.VerifierRemarks.errors }" />
+                            <div *ngIf="submitted && assetVerificationFormControls.VerifierRemarks.errors" class="invalid-feedback">
+                                <div *ngIf="submitted && assetVerificationFormControls.VerifierRemarks.errors.required">
+                                    Verifier Remarks is required</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col">
+                    <div class="row form-group">
+                        <label class="col-sm-4 col-form-label">Receipt Date *</label>
+                        <div class="col-sm-6">
+                            <div class="input-group date" id="ReceiptDate" data-target-input="nearest">
+                                <input type="text" class="form-control datetimepicker-input" name="RecpDate" data-target="#ReceiptDate" />
+                                <div class="input-group-append" data-target="#ReceiptDate" data-toggle="datetimepicker">
+                                    <div class="input-group-text"><i class="fa fa-calendar"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row form-group">
+                        <label class="col-sm-4 col-form-label">Supplier Doc Date *</label>
+                        <div class="col-sm-6">
+                            <div class="input-group date" id="DocumentDate" data-target-input="nearest">
+                                <input type="text" class="form-control datetimepicker-input" name="DocDate" data-target="#DocumentDate" />
+                                <div class="input-group-append" data-target="#DocumentDate" data-toggle="datetimepicker">
+                                    <div class="input-group-text"><i class="fa fa-calendar"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <ag-grid-angular #agGrid style="width: 100%; height: calc(100% - 160px);" class="ag-theme-alpine" [rowData]="rowReceiptData" [columnDefs]="columnReceiptDefs" rowSelection="single" cellSelection="none" animateRows="true" defaultColDef="defaultColDef" (gridReady)="onGridReady($event)"
+            suppressCellSelection="true">
+        </ag-grid-angular>
+    </form>
+</div>

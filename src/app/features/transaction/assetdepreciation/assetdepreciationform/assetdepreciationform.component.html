@@ -1,0 +1,43 @@
+<div style="height: auto;">
+    <div class="wrapper" style="height: auto; min-height: 100%;">
+        <div class="content-wrapper">
+            <section class="content" style="padding: 1%;">
+                <!-- left column -->
+                <!-- general form elements -->
+                <div class="col-md-12">
+                    <div class="card card-info">
+                        <div class="card-header">
+                            <h3 class="card-title">Asset Depreciation</h3>
+                        </div>
+                        <!-- /.card-header -->
+                        <!-- form start -->
+                        <form [formGroup]="assetDepreciationForm" class="form-horizontal">
+
+                            <div class="card-body col-md-6">
+
+                                <div style="text-align: left;">
+                                    <button type="button" (click)="SearchDepreciation()" class="btn btn-primary">
+                    <!-- <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1 mb-1"></span> -->
+                    Run Depreciation
+                  </button>
+                                </div>
+                            </div>
+
+                            <!-- /.card-body -->
+
+                            <!-- /.row -->
+
+
+                            <ag-grid-angular #agGrid style="width: 76vw; height: 30vw;padding-left: 15px;" class="ag-theme-alpine" [rowData]="rowData" [columnDefs]="columnDefs" rowSelection="single" cellSelection="none" animateRows="true" defaultColDef="defaultColDef" suppressCellSelection="true">
+                            </ag-grid-angular>
+
+                        </form>
+
+                    </div>
+
+                </div>
+
+            </section>
+        </div>
+    </div>
+</div>

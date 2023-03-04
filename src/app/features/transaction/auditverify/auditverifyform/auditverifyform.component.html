@@ -1,0 +1,88 @@
+
+                <!-- left column -->
+                <!-- general form elements -->
+                    <div class="card card-info" style="height: calc(100% - 5px);">
+                        <div class="card-header">
+                            <h3 class="card-title">Audit Verify</h3>
+                        </div>
+                        <!-- /.card-header -->
+                        <!-- form start -->
+                        <form [formGroup]="auditverifyform" class="form-horizontal">
+
+                            <div class="card-body col-md-12">
+                                <div class="row">
+                                    <div class="col">
+
+
+                                        <div class="row form-group">
+                                            <label class="col-sm-4 col-form-label">Audit No
+                                            </label>
+                                            <div class="col-sm-6">
+                                                <input type="text" formControlName="AuditNo" class="form-control" />
+
+                                            </div>
+                                        </div>
+
+                                        <div class="row form-group">
+                                            <label class="col-sm-4 col-form-label">Remarks
+                                                </label>
+                                            <div class="col-sm-6">
+                                                <textarea class="form-control" rows="3" formControlName="Remarks" class="form-control"></textarea>
+
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+
+                                    <div class="col">
+                                        <div class="row form-group">
+                                            <label class="col-sm-4 col-form-label">Audit
+                                                Date</label>
+                                            <div class="col-sm-6">
+                                                <div class="input-group date" id="AuditDate" data-target-input="nearest">
+                                                    <input type="text" class="form-control datetimepicker-input" name="RecpDate" data-target="#AuditDate" disabled="true" />
+                                                    <div class="input-group-append" data-target="#AuditDate" data-toggle="datetimepicker">
+                                                        <div class="input-group-text"><i class="fa fa-calendar"></i>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+
+                                            </div>
+                                        </div>
+
+
+
+                                    </div>
+
+
+                                </div>
+                            </div>
+
+                            <!-- /.card-body -->
+
+                            <!-- /.row -->
+                            <div class="card-footer" style="align-content: center;">
+                                <button type="button" (click)="OpenDiscrepancy()" [disabled]="loading || isbtnSaveDisabled" class="btn btn-success">
+                                    <!-- <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1 mb-1"></span> -->
+                                    Discrepancy
+                                </button>
+                                <button type="button" (click)="ShowGrid()" class="btn btn-info">
+                                    Back
+                                </button>
+                                <div *ngIf="error" style="color: red;font-weight: bold;">{{error}}</div>
+                            </div>
+
+                            <ag-grid-angular #agGrid style="width: 100%; height: 27vw;" class="ag-theme-alpine" [rowData]="rowAuditVerifyData" [columnDefs]="columnReceiptDefs" rowSelection="single" cellSelection="none" animateRows="true" defaultColDef="defaultColDef"
+                                (gridReady)="onGridReady($event)" suppressCellSelection="true">
+                            </ag-grid-angular>
+
+
+                        </form>
+
+
+                    </div>
+
+
+      

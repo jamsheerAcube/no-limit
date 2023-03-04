@@ -1,0 +1,82 @@
+<div class="card card-info" style="height: calc(100% - 5px);">
+    <div class="card-header">
+        <h3 class="card-title">Physical Count</h3>
+    </div>
+    <form [formGroup]="assetAuditForm" class="form-horizontal">
+        <div>
+            <button type="button" (click)="SaveAssetAudit()" [disabled]="loading || isbtnSaveDisabled"
+                class="btn btn-success btn-sm">
+                <i class="fa fa-save" aria-hidden="true"></i> Save
+            </button>
+            <button type="button" (click)="ShowGrid()" class="btn btn-danger btn-sm">
+                <i class="fa fa-long-arrow-alt-left" aria-hidden="true"></i> Back
+            </button>
+            <button type="button" (click)="ClearContents()" [disabled]=" isbtnClearDisabled "
+                class="btn btn-primary btn-sm">
+                <i class="fa fa-broom " aria-hidden="true "></i> Clear
+            </button>
+            <div *ngIf="error" style="color: red;font-weight: bold;">{{error}}</div>
+        </div>
+        <div class="card-body col-md-12">
+            <!-- <div class="row" [hidden]="!editMode">
+                <div class="col">
+                    <div class="row form-group">
+                        <label class="col-sm-1 col-form-label">Audit No</label>
+                        <div class="col-sm-3">
+                            <label>{{ auditId }}</label>
+                        </div>
+                    </div>
+                </div>
+            </div> -->  
+            <div class="row">
+                <div class="col-md-6">
+                    <label>Audit On *</label>
+                    <div class="input-group date" id="AuditOn" data-target-input="nearest">
+                        <input type="text" #AuditOn class="form-control datetimepicker-input" 
+                            [ngClass]="{ 'is-invalid': submitted && !AuditOn.value }" data-target="#AuditOn" />
+                        <div class="input-group-append" data-target="#AuditOn" data-toggle="datetimepicker">
+                            <div class="input-group-text"><i class="fa fa-calendar"></i>
+                            </div>
+                        </div>
+                        <div *ngIf="submitted && !AuditOn.value" class="invalid-feedback">
+                            Audit On is required
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <label>Remarks *</label>
+                    <textarea class="form-control" rows="1" formControlName="remarks"
+                        [ngClass]="{ 'is-invalid': submitted && assetAuditFormControls.remarks.errors }"></textarea>
+                    <div *ngIf="submitted && assetAuditFormControls.remarks.errors" class="invalid-feedback">
+                        <div *ngIf="submitted && assetAuditFormControls.remarks.errors.required">
+                            Remarks is required</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row" style="height:100%">
+                <div class="col-md-6">
+                    <label for="subinventory">Locations</label>
+                    <ng-select [items]="locationList" bindLabel="locationName" [disabled]="viewMode"
+                        bindValue="locationID"  [multiple]="true" placeholder="--All--"
+                        formControlName="LocationSelCode">
+                    </ng-select>
+                </div>
+                <div class="col-md-6">
+                    <label for="item">Department</label>
+                    <ng-select [items]="departmentList" bindLabel="department" [disabled]="viewMode" bindValue="department"
+                        [multiple]="true" placeholder="--All--" formControlName="Department">
+                    </ng-select>
+                </div>
+            </div>
+            <div class="row" style="height:100%">
+                <div class="col-md-6">
+                    <label for="batch">Life Style</label>
+                    <ng-select [items]="lifestyleList" bindLabel="lifeStyle" [disabled]="viewMode" bindValue="lifeStyle"
+                        [multiple]="true" placeholder="--All--" formControlName="LifeStyle">
+                    </ng-select>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

@@ -1,0 +1,111 @@
+<!-- <div id="container">
+    <div class="topbar">
+        <div class="topbar-left">
+            <div class="applogo"><img src="assets/appimages/appnamelogo.png" style="mix-blend-mode: multiply;"></div>
+            <div class="nav-link "><i class="fas fa-bars menu-toggle "></i></div>
+            <div routerLink="/dashboardlink" class="nav-link">Home</div>
+        </div>
+        <div class="topbar-right ">
+            <div class="nav-link "><i class="fas fa-user mr-5 "></i>{{ userName }}</div>
+            <div class="nav-link " (click)="onLogout() "><i class="fas fa-sign-out-alt mr-5 "></i>Logout</div>
+        </div>
+    </div>
+    <div class="side-nav ">
+        <div class="search-bar ">
+            <input class="search-control " type="search " placeholder="Search Menu " aria-label="Search " (input)="onSearchChange(myInput.value) " #myInput>
+        </div>
+        <ul class="sidemenu-ul ">
+            <div *ngFor="let item of parentMenuItems ">
+                <li (click)="item.isActive=! item.isActive " [ngClass]="{ 'nav-item nav-item-parent': true, 'active': item.isActive} ">
+                    <i class={{item.menuIconName}}></i><span class="nav-item-text ">
+                        {{item.menuText}}
+                    </span>
+                </li>
+                <div *ngIf="getChildMenuItems(item.menuName).length>0" class="nav-sub-list">
+                    <ul class="sidemenu-ul">
+                        <li *ngFor="let itemChild of getChildMenuItems(item.menuName)" class="nav-item" routerLink="/{{ itemChild.menuName | lowercase }}" routerLinkActive="active">
+                            <i class={{itemChild.menuIconName}}></i><span class="nav-item-text">{{itemChild.menuText}}</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </ul>
+    </div>
+    <div class="content">
+        <router-outlet></router-outlet>
+    </div>
+</div> -->
+
+
+
+<div class="layout-wrapper" (click)="onLayoutClick()" [ngClass]="{'menu-layout-static': layoutMode !== 'overlay',
+				'menu-layout-overlay': layoutMode === 'overlay',
+				'layout-menu-overlay-active': overlayMenuActive,
+				'menu-layout-slim': layoutMode === 'slim',
+				'menu-layout-horizontal': layoutMode === 'horizontal',
+				'layout-menu-static-inactive': this.staticMenuDesktopInactive,
+				'layout-menu-static-active': staticMenuMobileActive}">
+    <div class="topbar">
+        <div class="topbar-left">
+            <div class="applogo">
+                <img src="assets/appimages/appnamelogo.png" style="mix-blend-mode: multiply;">
+            </div>
+            <div (click)="onMenuButtonClick($event)" class="nav-link px-3">
+                <i style="font-size:22px;padding-top: 4px"
+                    [ngClass]="rotateMenuButton ? 'fas fa-angle-double-right ' : 'fas fa-angle-double-left' "></i>
+            </div>
+            <div routerLink="/dashboardlink" class="nav-link">Home</div>
+        </div>
+        <div class="topbar-right ">
+            <div  id="topbar-menu-button" (click)="onTopbarMenuButtonClick($event)" class="nav-link px-3">
+                <i style="font-size:22px;padding-top: 4px" class="fas fa-bars"></i>
+            </div>
+            <ul class="topbar-items fadeInDown" [ngClass]="{'topbar-items-visible': topbarMenuActive}">
+                <li #profile class="profile-item">
+                    <a href="#">
+                        <div class="nav-link " (click)="onLogout() "><i class="fas fa-sign-out-alt mr-5 "></i>Logout</div> 
+                    </a>
+                </li>
+                <li #profile class="profile-item">
+                    <a href="#">
+                        <div class="nav-link "><i class="fas fa-user mr-5 "></i>{{ userName }}</div>
+                     
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="layout-menu-container">
+        <div class="side-nav ">
+            <div class="search-bar ">
+                <input class="search-control " type="search " placeholder="Search Menu " aria-label="Search "
+                    (input)="onSearchChange(myInput.value) " #myInput>
+            </div>
+            <ul class="sidemenu-ul ">
+                <div *ngFor="let item of parentMenuItems ">
+                    <li (click)="item.isActive=! item.isActive;onMenuClick(item) "
+                        [ngClass]="{ 'nav-item nav-item-parent': true, 'active': item.isActive} ">
+                        <i class={{item.menuIconName}}></i><span class="nav-item-text ">
+                            {{item.menuText}}
+                        </span>
+                    </li>
+                    <div *ngIf="getChildMenuItems(item.menuName).length>0" class="nav-sub-list">
+                        <ul class="sidemenu-ul">
+                            <li *ngFor="let itemChild of getChildMenuItems(item.menuName)" class="nav-item"
+                                routerLink="/{{ itemChild.menuName | lowercase }}" routerLinkActive="active">
+                                <i class={{itemChild.menuIconName}}></i><span
+                                    class="nav-item-text">{{itemChild.menuText}}</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </ul>
+        </div>
+    </div>
+
+    <div class="layout-main">
+
+        <router-outlet></router-outlet>
+
+    </div>
+</div>

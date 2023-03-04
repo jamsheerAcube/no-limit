@@ -1,0 +1,116 @@
+<div class="card card-info">
+    <div class="card-header">
+        <h3 class="card-title">User Master</h3>
+    </div>
+    <!-- /.card-header -->
+    <!-- form start -->
+    <form [formGroup]="UserMasterForm" class="form-horizontal">
+
+        <div class="card-body col-md-8">
+                <div class="row">
+                    <div class="col-sm-2"></div>
+                    <div class="col-md-4">
+                        <label class="col-sm-8 col-form-label">Select Organization</label>
+                        <ngx-treeview [config]="treeviewConfig" [items]="organizationList" (selectedChange)="onOrgSelectionChange($event)" style="height: 100%;" >
+                        </ngx-treeview>
+                    </div>
+                </div>
+                    <div class="row form-group">
+                        <label class="col-sm-2 col-form-label" for="inputEmail3">User Role Name *</label>
+                        <div class="col-sm-4">
+                            <select class="form-control select2bs4 select2-hidden-accessible" style="width: 100%;" formControlName="UserRoleSelCode" [ngClass]="{ 'is-invalid': submitted && UserMasterFormControls.UserRoleSelCode.errors }" name="UserRoleSelCode" required>
+                                    <option selected="selected"></option>
+                                    <option *ngFor="let x of userroles" value="{{ x.id }}">
+                                        {{ x.roleName }}
+                                    </option>
+                                </select>
+        
+                            <div *ngIf="UserMasterFormControls.UserRoleSelCode.errors" class="invalid-feedback">
+                                <div *ngIf="submitted && UserMasterFormControls.UserRoleSelCode.errors.required">User Role is required</div>
+                            </div>
+                        </div>
+        
+                    </div>
+                    <div class="row form-group">
+                        <label class="col-sm-2 col-form-label" for="inputEmail3">Employee *</label>
+                        <div class="col-sm-4">
+                            <select class="form-control select2bs4 select2-hidden-accessible" style="width: 100%;" formControlName="EmployeeSelCode" [ngClass]="{ 'is-invalid': submitted && UserMasterFormControls.EmployeeSelCode.errors }" name="EmployeeSelCode" required>
+                                    <option selected="selected"></option>
+                                    <option *ngFor="let x of employees" value="{{ x.employeeId }}">
+                                        {{ x.employeeCode }} - {{ x.firstName }}
+                                    </option>
+                                </select>
+        
+                            <div *ngIf="UserMasterFormControls.EmployeeSelCode.errors" class="invalid-feedback">
+                                <div *ngIf="submitted && UserMasterFormControls.EmployeeSelCode.errors.required">Employee is required</div>
+                            </div>
+                        </div>
+        
+                    </div>
+                    <div class="row form-group">
+                        <label class="col-sm-2 col-form-label" for="inputEmail3">User Name *</label>
+                        <div class="col-sm-4">
+                            <input type="text" autocomplete="off" formControlName="UserName" class="form-control" maxlength="50" [ngClass]="{ 'is-invalid': submitted && UserMasterFormControls.UserName.errors }" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" />
+                            <div *ngIf="submitted && UserMasterFormControls.UserName.errors" class="invalid-feedback">
+                                <div *ngIf="UserMasterFormControls.UserName.errors.required">User Name is required</div>
+                                <div *ngIf="UserMasterFormControls.UserName.errors.pattern && UserMasterFormControls.UserName.dirty && UserMasterFormControls.UserName.invalid">Not a valid email</div>
+                            </div>
+                        </div>
+        
+                    </div>
+                    <div class="row form-group">
+                        <label class="col-sm-2 col-form-label" for="inputEmail3">Password *</label>
+                        <div class="col-sm-4">
+                            <input type="password" autocomplete="new-password" formControlName="Password" class="form-control" maxlength="50" [ngClass]="{ 'is-invalid': submitted && UserMasterFormControls.Password.errors }" pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&].{7,}"
+                            />
+                            <div *ngIf="submitted && UserMasterFormControls.Password.errors" class="invalid-feedback">
+                                <div *ngIf="UserMasterFormControls.Password.errors.required">Password is required</div>
+                                <div *ngIf="UserMasterFormControls.Password.errors.pattern && UserMasterFormControls.Password.dirty && UserMasterFormControls.Password.invalid">Not a valid password</div>
+                            </div>
+                        </div>
+        
+                    </div>
+                    <div class="row">
+                        <label class="col-sm-2 form-label" for="inputEmail3">Password should be: </label>
+                        <label class="col-sm-4 form-label" for="inputEmail3">At least 8 characters in length</label>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-2"></div>
+                        <label class="col-sm-4 form-label" for="inputEmail3">At least one lowercase letters</label>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-2"></div>
+                        <label class="col-sm-4 form-label" for="inputEmail3">At least one Uppercase letters</label>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-2"></div>
+                        <label class="col-sm-4 form-label" for="inputEmail3">At least one numeric value</label>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-2"></div>
+                        <label class="col-sm-4 form-label" for="inputEmail3">At least one special character</label>
+                    </div>
+           
+        </div>
+        <!-- /.card-body -->
+
+        <!-- /.row -->
+
+        <div class="card-footer" style="align-content: center;">
+            <button type="button" (click)="SaveUserMaster()" [disabled]="loading || isbtnSaveDisabled" class="btn btn-success btn-sm mr-1 ml-1 mt-2 mb-2">
+                  <!-- <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1 mb-1"></span> -->
+                  Save
+                </button>
+            <button type="button" (click)="ShowGrid()" class="btn btn-primary btn-sm mr-1 ml-1 mt-2 mb-2">
+                  Back
+                </button>
+            <button type="button" (click)=ClearContents() [disabled]="isbtnClearDisabled" class="btn btn-info btn-sm mr-1 ml-1 mt-2 mb-2">
+                  Clear
+                </button>
+            <div *ngIf="error" style="color: red;font-weight: bold;">{{error}}</div>
+        </div>
+
+    </form>
+
+
+</div>

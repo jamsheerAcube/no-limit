@@ -1,0 +1,41 @@
+<div class="card card-info">
+    <div class="card-header">
+        <h3 class="card-title">Department Master</h3>
+    </div>
+    <form [formGroup]="departmentmasterform" class="form-horizontal">
+        <div class="card-body col-sm-6">
+            <div class="row form-group">
+                <label class="col-sm-4 col-form-label">Department Code *</label>
+                <div class="col-sm-6">
+                    <input type="text" formControlName="DepartmentCode" class="form-control" [ngClass]="{ 'is-invalid': submitted && departmentmasterFormControls.DepartmentCode.errors }"  />
+                    <div *ngIf="submitted && departmentmasterFormControls.DepartmentCode.errors" class="invalid-feedback">
+                        <div *ngIf="submitted && departmentmasterFormControls.DepartmentCode.errors.required">Department Code is required</div>
+                       
+                    </div>
+                </div>
+            </div>
+            <div class="row form-group">
+                <label class="col-sm-4 col-form-label">Department Name *</label>
+                <div class="col-sm-6">
+                    <input type="text" formControlName="DepartmentName" class="form-control" [ngClass]="{ 'is-invalid': submitted && departmentmasterFormControls.DepartmentName.errors }"  />
+                    <div *ngIf="submitted && departmentmasterFormControls.DepartmentName.errors" class="invalid-feedback">
+                        <div *ngIf="submitted && departmentmasterFormControls.DepartmentName.errors.required">Department Name is required</div>
+                       
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card-footer" style="align-content: center;">
+            <button type="button" (click)="SaveDepartmentMaster()" [disabled]="loading || isbtnSaveDisabled" class="btn btn-success btn-sm">
+                <i class="fa fa-save" aria-hidden="true"></i> Save
+            </button>
+            <button type="button" (click)="ShowGrid()" class="btn btn-danger btn-sm">
+                <i class="fa fa-long-arrow-alt-left" aria-hidden="true"></i> Back
+            </button>
+            <button type="button" (click)="ClearContents()" [disabled]=" isbtnClearDisabled " class="btn btn-primary btn-sm">
+                <i class="fa fa-broom " aria-hidden="true "></i> Clear
+            </button>
+            <div *ngIf="error " style="color: red;font-weight: bold; ">{{error}}</div>
+        </div>
+    </form>
+</div>

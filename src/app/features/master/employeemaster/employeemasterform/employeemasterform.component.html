@@ -1,0 +1,109 @@
+<div class="card card-info">
+    <div class="card-header">
+        <h3 class="card-title">Employee Master</h3>
+    </div>
+    <form [formGroup]="employeeMasterForm" class="form-horizontal">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="row form-group">
+                        <label class="col-sm-3 col-form-label">Department Code*</label>
+                        <div class="col-sm-8">
+                            <select class="form-control select2bs4 select2-hidden-accessible" style="width: 100%;" formControlName="departmentSelCode" [ngClass]="{ 'is-invalid': submitted && employeeMasterFormControls.departmentSelCode.errors }" name="departmentSelCode" required>
+                                <option selected="selected"></option>
+                                <option *ngFor="let x of departmentCodes" value="{{ x.departmentID }}">
+                                    {{ x.departmentCode }} - {{ x.departmentName }}
+                                </option>
+                            </select>
+                            <div *ngIf="employeeMasterFormControls.departmentSelCode.errors" class="invalid-feedback">
+                                <div *ngIf="submitted && employeeMasterFormControls.departmentSelCode.errors.required">
+                                    Department Code is required</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row form-group">
+                        <label class="col-sm-3 col-form-label">Employee Code *</label>
+                        <div class="col-sm-8">
+                            <input type="text" formControlName="EmployeeCode" class="form-control" [ngClass]="{ 'is-invalid': submitted && employeeMasterFormControls.EmployeeCode.errors }"  />
+                            <div *ngIf="employeeMasterFormControls.EmployeeCode.errors" class="invalid-feedback">
+                                <div *ngIf="submitted && employeeMasterFormControls.EmployeeCode.errors.required">
+                                    Employee Code is required</div>
+                                
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row form-group">
+                        <label class="col-sm-3 col-form-label">First Name *</label>
+                        <div class="col-sm-8">
+                            <input type="text" formControlName="FirstName" class="form-control" [ngClass]="{ 'is-invalid': submitted && employeeMasterFormControls.FirstName.errors }"  />
+                            <div *ngIf="employeeMasterFormControls.FirstName.errors" class="invalid-feedback">
+                                <div *ngIf="submitted && employeeMasterFormControls.FirstName.errors.required">
+                                    First Name is required</div>
+                               
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row form-group">
+                        <label class="col-sm-3 col-form-label">Last Name</label>
+                        <div class="col-sm-8">
+                            <input type="text" formControlName="LastName" class="form-control" [ngClass]="{ 'is-invalid': submitted && employeeMasterFormControls.LastName.errors }"  />
+                            <div *ngIf="employeeMasterFormControls.LastName.errors" class="invalid-feedback">
+                               
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="row form-group">
+                        <label class="col-sm-3 col-form-label">Designation *</label>
+                        <div class="col-sm-8">
+                            <input type="text" formControlName="Designation" class="form-control" [ngClass]="{ 'is-invalid': submitted && employeeMasterFormControls.Designation.errors }"  />
+                            <div *ngIf="employeeMasterFormControls.Designation.errors" class="invalid-feedback">
+                                <div *ngIf="submitted && employeeMasterFormControls.Designation.errors.required">
+                                    Designation is required</div>
+                               
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row form-group">
+                        <label class="col-sm-3 col-form-label">Email *</label>
+                        <div class="col-sm-8">
+                            <input type="email" formControlName="EmailAddress" class="form-control" [ngClass]="{ 'is-invalid': submitted && employeeMasterFormControls.EmailAddress.errors }" pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$" />
+                            <div *ngIf="employeeMasterFormControls.EmailAddress.errors" class="invalid-feedback">
+                                <div *ngIf="submitted && employeeMasterFormControls.EmailAddress.errors.required">
+                                    Email is required
+                                </div>
+                                <div *ngIf="employeeMasterFormControls.EmailAddress.errors.pattern && employeeMasterFormControls.EmailAddress.dirty && employeeMasterFormControls.EmailAddress.invalid">
+                                    Invalid Email.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row form-group">
+                        <label class="col-sm-3 col-form-label">Contact Number</label>
+                        <div class="col-sm-8">
+                            <input type="text" formControlName="ContactNumber" class="form-control" [ngClass]="{ 'is-invalid': submitted && employeeMasterFormControls.ContactNumber.errors }" pattern="[- +()0-9]+" />
+                            <div *ngIf="employeeMasterFormControls.ContactNumber.errors" class="invalid-feedback">
+                                <div *ngIf="employeeMasterFormControls.ContactNumber.errors.pattern && employeeMasterFormControls.ContactNumber.dirty && employeeMasterFormControls.ContactNumber.invalid">
+                                    Invalid Contact Number.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card-footer" style="align-content: center;">
+            <button type="button" (click)="SaveEmployeeMaster()" [disabled]="loading || isbtnSaveDisabled" class="btn btn-success btn-sm">
+                <i class="fa fa-save" aria-hidden="true"></i> Save
+            </button>
+            <button type="button" (click)="ShowGrid()" class="btn btn-danger btn-sm">
+                <i class="fa fa-long-arrow-alt-left" aria-hidden="true"></i> Back
+            </button>
+            <button type="button" (click)="ClearContents()" [disabled]=" isbtnClearDisabled " class="btn btn-primary btn-sm">
+                <i class="fa fa-broom " aria-hidden="true "></i> Clear
+            </button>
+            <div *ngIf="error " style="color: red;font-weight: bold; ">{{error}}</div>
+        </div>
+    </form>
+</div>

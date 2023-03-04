@@ -1,0 +1,13 @@
+<button (click)="OnRefreshCick();" class="btn btn-info">
+  Refresh
+</button>
+<!-- <button (click)="btnNewClick()" [hidden]="!isCreateAllowed" class="btn btn-info">
+    New
+  </button> -->
+<button (click)="OnEditClick()" [hidden]="isRowUnSelected || !isEditAllowed" class="btn btn-info">
+  Verify
+</button>
+<button (click)="OnViewClick()" [hidden]="isRowUnSelected || !isViewAllowed" class="btn btn-info">
+  View
+</button>
+<org-fat-grid [entity]="name"></org-fat-grid>

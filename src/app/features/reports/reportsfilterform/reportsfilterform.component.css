@@ -1,0 +1,5 @@
+@media (min-width: 992px) {
+    .container-scroll .columns-24 { 
+        width: max-content;
+    }
+  }

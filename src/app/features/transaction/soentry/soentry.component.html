@@ -1,0 +1,87 @@
+<div class="card card-info">
+  <div class="card-header">
+    <h3 class="card-title">Sale Order No. Entry</h3>
+  </div>
+  <form [formGroup]="PrintedHistoryReportForm" class="form-horizontal">
+    <div class="card-body">
+      <div class="row form-group">
+        <div class="col-sm-3">
+          <label for="item">From Date</label>
+          <input type="date" formControlName="FromDate" class="form-control" id="FromDate" name="FromDate" />
+        </div>
+        <div class="col-sm-3">
+          <label for="batch">To Date</label>
+          <input type="date" formControlName="ToDate" class="form-control" id="ToDate" name="ToDate" />
+        </div>
+      </div>
+      <div class="row form-group">
+        <!-- <button (click)="LoadReport()" class="btn btn-info">
+          <span class="fa fa-refresh"></span> Refresh
+        </button> -->
+        <button type="submit" class="btn btn-primary" (click)="LoadReport()">
+          <span class="fa fa-search"></span> Search
+        </button>
+      
+      </div>
+      <div class="row">
+          <div class="col-sm-3">
+              <label for="batch">Sale Order No.*</label>
+            </div>
+      </div>
+      <div class="row">
+          <div class="col-sm-3">
+              <input type="text" formControlName="SoNo" class="form-control" id="SoNo" name="SoNo" [ngClass]="{ 'is-invalid': submitted && PrintedHistoryReportFormControls.SoNo.errors }"/>
+              <div *ngIf="submitted && PrintedHistoryReportFormControls.SoNo.errors" class="invalid-feedback">
+                  <div *ngIf="submitted && PrintedHistoryReportFormControls.SoNo.errors.required">
+                      SaleOrder No is required</div>
+              </div>
+            </div>
+            <div class="col-sm-3">
+              <button *ngIf="showActivebutton" type="submit" class="btn btn-info" (click)="UpdateSerialNoStatus(0)">
+                  <span class="fa fa-check"></span> Save
+                </button>
+            </div>
+      </div>
+      <div class="row" style="overflow: auto;">
+          <div *ngIf="validationmessage" class="text-danger">{{validationmessage}}</div>
+        <kendo-grid #kendogrid [filter]="filter" [filterable]="true" (filterChange)="filterChange($event)"
+          [kendoGridBinding]="gridView" [pageSize]="10" [pageable]="true" [sortable]="true" [resizable]="true"
+          [columnMenu]="{ filter: true }" (selectedKeysChange)="OnSelectCheckbox($event)" kendoGridSelectBy="serialNo"
+          [selectable]="selectableSettings" [height]="600"  [(selectedKeys)]="mySelection"
+          (cellClick)="cellClickHandler($event)"
+          (cellClose)="cellCloseHandler($event)"
+          (cancel)="cancelHandler($event)">
+          <ng-template kendoGridToolbarTemplate>
+            <button kendoGridPDFCommand icon="file-pdf">Export to PDF</button>
+            <button kendoGridExcelCommand icon="file-excel">Export to Excel</button>
+          </ng-template>
+          <kendo-grid-checkbox-column [showSelectAll]="true" [width]="70"></kendo-grid-checkbox-column>
+          <kendo-grid-column [width]="150" field="serialNo" title="Serial No"></kendo-grid-column>
+          <kendo-grid-column [width]="200" field="createD_DATE" title="Printed On">
+            <ng-template kendoGridCellTemplate let-dataItem>
+              {{dataItem.createD_DATE | date: 'dd-MM-yyyy'}}
+            </ng-template>
+          </kendo-grid-column>
+          <kendo-grid-column [width]="200" field="createD_BY" title="Printed By"></kendo-grid-column>
+          <kendo-grid-column [width]="200" field="transactioN_ID" title="Transaction ID"></kendo-grid-column>
+          <kendo-grid-column [width]="200" field="sO_NUMBER" title="SO Number"></kendo-grid-column>
+          <kendo-grid-column [width]="200" field="orgCode" title="Org Code"></kendo-grid-column>
+          <kendo-grid-column [width]="250" field="orgName" title="Org Name"></kendo-grid-column>
+          <kendo-grid-column [width]="150" field="locationCode" title="Location Code"></kendo-grid-column>
+          <kendo-grid-column [width]="250" field="locationName" title="Location Name"></kendo-grid-column>
+          <kendo-grid-column [width]="200" field="itemCode" title="Item Code"></kendo-grid-column>
+          <kendo-grid-column [width]="250" field="itemName" title="Item Name"></kendo-grid-column>
+          <kendo-grid-column [width]="200" field="loT_NUMBER" title="LOT Number"></kendo-grid-column>
+          <kendo-grid-column [width]="200" field="supplieR_LOT_NUMBER" title="Supplier LOT Number"></kendo-grid-column>
+          <kendo-grid-column [width]="200" field="expiratioN_DATE" title="Expiration Date">
+            <ng-template kendoGridCellTemplate let-dataItem>
+              {{dataItem.expiratioN_DATE | date: 'dd-MM-yyyy'}}
+            </ng-template>
+          </kendo-grid-column>
+          <kendo-grid-pdf fileName="PrintedHistory.pdf" [allPages]="true" [repeatHeaders]="true"></kendo-grid-pdf>
+          <kendo-grid-excel [fetchData]="allData" fileName="PrintedHistory.xlsx"></kendo-grid-excel>
+        </kendo-grid>
+      </div>
+    </div>
+  </form>
+</div>

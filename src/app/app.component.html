@@ -1,0 +1,9 @@
+<div style="height:100%">
+    <div *ngIf="isAuthenticated else elseBlock">
+        <org-fat-sidebarnav></org-fat-sidebarnav>
+        <!--<router-outlet name="assetregisterpopup"></router-outlet>-->
+    </div>
+    <ng-template #elseBlock>
+        <router-outlet></router-outlet>
+    </ng-template>
+</div>

@@ -1,0 +1,127 @@
+<div class="card card-info">
+  <div class="card-header">
+    <h3 class="card-title">Tag Print</h3>
+  </div>
+  <!-- <div class="card-body col-md-12" > -->
+  <form [formGroup]="DemoTagPrintForm" class="form-horizontal">
+    <div class="row">
+      <button type="button" class="btn btn-primary" data-toggle="collapse" data-target="#filter-panel">
+        <span class="fa fa-filter"></span> Advanced Search
+      </button>
+    </div>
+    <div class="row">
+
+      <div class="row form-group" style="width: 100%;">
+        <div id="filter-panel" style="width: 100%;" class="collapse filter-panel">
+          <div class="row form-group">
+            <div class="col-sm-7">
+              <label for="pref-perpage">Organization</label>
+              <ng-select [items]="organizationList" bindLabel="orgName" bindValue="orgID"
+                (clear)="onOrganizationClear()" (change)="onOrganizationChange($event)" [multiple]="false"
+                placeholder="--All--" formControlName="OrganizationSelCode" [(ngModel)]="selectedorganizationList">
+              </ng-select>
+            </div>
+
+            <div class="col-sm-5">
+              <label for="subinventory">Sub Inventory</label>
+              <ng-select [items]="locationList" bindLabel="locationName" bindValue="locationID" [multiple]="true"
+                placeholder="--All--" formControlName="LocationSelCode" [(ngModel)]="selectedLocationList">
+              </ng-select>
+            </div>
+
+          </div>
+          <div class="row form-group">
+            <div class="col-sm-7">
+              <label for="item">Item</label>
+              <ng-select [items]="itemList" bindLabel="itemName" bindValue="itemID" (clear)="onItemClear()"
+                (remove)="onItemRemove($event)" (change)="onItemChange($event)" [multiple]="true" placeholder="--All--"
+                formControlName="ItemSelCode" [(ngModel)]="selectedItemList">
+              </ng-select>
+            </div>
+
+            <div class="col-sm-5">
+              <label for="batch">Batch</label>
+              <ng-select [items]="batchList" bindLabel="loT_NUMBER" bindValue="loT_NUMBER" [multiple]="true"
+                placeholder="--All--" formControlName="BatchSelCode" [(ngModel)]="selectedBatchList">
+              </ng-select>
+            </div>
+
+          </div>
+          <div class="row form-group">
+            <div class="col-sm-3">
+              <label for="item">From Date</label>
+              <input type="date" formControlName="FromDate" class="form-control" id="FromDate" name="FromDate" />
+            </div>
+
+            <div class="col-sm-3">
+              <label for="batch">To Date</label>
+              <input type="date" formControlName="ToDate" class="form-control" id="ToDate" name="ToDate" />
+            </div>
+            <div class="col-sm-3">
+              <label for="item">Printed Qty</label>
+              <select class="form-control" formControlName="PrintQtyFilter">
+                <option value="less than" selected>Less Than</option>
+                <option value="less thanprinted">Less Than & Already Printed</option>
+                <option value="greater than">Greater Than</option>
+                <option value="equal">Equal</option>
+              </select>
+            </div>
+          </div>
+          <div class="row form-group">
+
+          </div>
+          <div class="row form-group">
+            <button type="reset" class="btn btn-info" (click)="RefreshFilter()">
+              <span class="fa fa-refresh"></span> Reset
+            </button>
+            <button type="submit" class="btn btn-primary" (click)="LoadPrintData()">
+              <span class="fa fa-search"></span> Search
+            </button>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+    <hr>
+    <div class="row form-group">
+      <div class="col-sm-3">
+        <label for="PrintTemplateSelCode">Template Name
+          *</label>
+        <select class="form-control select2bs4 select2-hidden-accessible" style="width: 100%;"
+          formControlName="PrintTemplateSelCode" id="PrintTemplateSelCode"
+          [ngClass]="{ 'is-invalid': submitted && DemoTagPrintFormControls.PrintTemplateSelCode.errors }"
+          name="PrintTemplateSelCode">
+          <option selected="selected"></option>
+          <option *ngFor="let x of printLabelDesignCodes" value="{{ x }}">
+            {{ x }}
+          </option>
+        </select>
+        <div *ngIf="submitted && DemoTagPrintFormControls.PrintTemplateSelCode.errors" class="invalid-feedback">
+          <div *ngIf="submitted && DemoTagPrintFormControls.PrintTemplateSelCode.errors.required">
+            Template name is required</div>
+        </div>
+        <button type="button" [disabled]="!isRowSelected" class="btn btn-info" (click)="PrintTag()">
+          <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1 mb-1"></span>
+          Print</button>
+      </div>
+
+    </div>
+    <div class="row">
+      <div *ngIf="error" style="color: red;font-weight: bold;">{{error}}</div>
+    </div>
+
+    <div class="row col-12" *ngIf="(printList.length)>0">
+      <span class="info-lable" style="margin-left:20px;">Selected Items : {{selectedRowCount}}</span>
+      <span class="info-lable" style="margin-left:20px;">Selected Qty : {{selectedQty}}</span>
+    </div>
+    
+    <ag-grid-angular #agGrid [rowClassRules]="rowClassRules" style="width: 100%; height: 37vw;" class="ag-theme-alpine"
+      [columnDefs]="columnPrintDefs" rowSelection="multiple" rowHeight="50" [rowData]="printList"
+      (rowClicked)="onPrintRowClick($event)" (selectionChanged)="onSelectionChanged($event)" cellSelection="none"
+      animateRows="true" defaultColDef="defaultColDef" suppressRowClickSelection="true"
+      stopEditingWhenCellsLoseFocus=true [pagination]="true" [paginationPageSize]="10">
+    </ag-grid-angular>
+  </form>
+  <!-- </div> -->
+</div>

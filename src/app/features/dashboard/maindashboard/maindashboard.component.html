@@ -1,0 +1,218 @@
+<section class="col-lg-12 connectedSortable ui-sortable">
+    <!-- Custom tabs (Charts with tabs)-->
+
+    <div class="card">
+      <div class="card-header ui-sortable-handle" style="cursor:pointer" data-toggle="collapse" data-target="#LastAuditDiv" aria-expanded="true" aria-controls="collapseOne">
+        <h3 class="card-title">
+         Last 10 Audit Summary
+        </h3>
+
+      </div><!-- /.card-header -->
+      <div class="card-body collapse show" id="LastAuditDiv">
+        <div class="tab-content p-0">
+          <!-- Morris chart - Sales -->
+          <div class="row" style="overflow: auto;">
+            <kendo-grid #kendogrid
+            [filter]="filter"
+            [filterable]="true"
+            (filterChange)="filterChange($event)"
+[kendoGridBinding]="gridAuditView"
+      [pageSize]="10"
+      [pageable]="true"
+      [resizable]="true"
+      [sortable]="true"
+      [selectable]="true"
+      [height]="450"
+      [columnMenu]="{ filter: true }"
+    >
+    <ng-template kendoGridToolbarTemplate>
+        <button kendoGridPDFCommand icon="file-pdf">Export to PDF</button>
+        <button kendoGridExcelCommand icon="file-excel">Export to Excel</button>
+      </ng-template>
+    <!-- filter="numeric" -->
+  <kendo-grid-column [width]="200"
+  field="auditId"
+  title="AuditId"
+></kendo-grid-column>
+<kendo-grid-column [width]="200"
+field="orgCode"
+title="Org Code"
+></kendo-grid-column>
+<kendo-grid-column [width]="200"
+field="orgName"
+title="Org Name"
+></kendo-grid-column>
+<kendo-grid-column [width]="150"
+field="statusText"
+title="Status"
+></kendo-grid-column>
+<kendo-grid-column [width]="200"
+field="remark"
+title="Remark"
+></kendo-grid-column>
+<kendo-grid-column [width]="200"
+field="toBeAuditedOn"
+title="Audited On"
+>
+<ng-template kendoGridCellTemplate let-dataItem>
+    {{dataItem.toBeAuditedOn | date: 'dd-MM-yyyy'}}
+  </ng-template>
+</kendo-grid-column>
+<kendo-grid-column [width]="250"
+field="createdBy"
+title="Created By"
+></kendo-grid-column>
+<kendo-grid-column [width]="250"
+field="releasedBy"
+title="Released By"
+></kendo-grid-column>
+<kendo-grid-column [width]="200"
+field="releasedDate"
+title="Released Date"
+>
+<ng-template kendoGridCellTemplate let-dataItem>
+    {{dataItem.releasedDate | date: 'dd-MM-yyyy'}}
+  </ng-template>
+</kendo-grid-column>
+<kendo-grid-column [width]="250"
+field="closedBy"
+title="Closed By"
+></kendo-grid-column>
+<kendo-grid-column [width]="200"
+field="closedDate"
+title="Closed Date"
+>
+<ng-template kendoGridCellTemplate let-dataItem>
+    {{dataItem.closedDate | date: 'dd-MM-yyyy'}}
+  </ng-template>
+</kendo-grid-column>
+<kendo-grid-column [width]="200"
+field="totalStock"
+title="Total Assigned"
+></kendo-grid-column>
+<kendo-grid-column [width]="150"
+field="missing"
+title="Missing"
+></kendo-grid-column>
+<kendo-grid-column [width]="150"
+field="found"
+title="Found"
+></kendo-grid-column>
+<kendo-grid-column [width]="150"
+field="unknown"
+title="Unknown"
+></kendo-grid-column>
+<kendo-grid-column [width]="200"
+field="locationMismatch"
+title="Location Mismatch"
+></kendo-grid-column>
+      <kendo-grid-pdf
+      fileName="AuditSummary.pdf"
+      [allPages]="true"
+      [repeatHeaders]="true"
+    ></kendo-grid-pdf>
+    <kendo-grid-excel
+    [fetchData]="allData"
+    fileName="AuditSummary.xlsx"
+   
+  ></kendo-grid-excel>
+</kendo-grid>
+          </div>
+        </div>
+      </div><!-- /.card-body -->
+    </div>
+
+    <div class="card">
+        <div class="card-header ui-sortable-handle" >
+          <h3 class="card-title" style="cursor:pointer" data-toggle="collapse" data-target="#ExpiringDiv" aria-expanded="true" aria-controls="collapseOne">
+           Near On Expiry
+          </h3>
+          <div class="col-sm-3" style="margin-left: auto;margin-right: 0;">
+            <select #valuelist (change)="onValueListChange(valuelist.value)"  style="width: 100%;"
+              formControlName="ValueSelCode" name="ValueSelCode">
+              <option selected="selected" value="0">Expired</option>
+              <option *ngFor="let x of valueListModel" value="{{ x.value }}">
+                {{ x.displayText }}
+              </option>
+            </select>
+          </div>
+        </div><!-- /.card-header -->
+        <div class="card-body collapse show" id="ExpiringDiv">
+          <div class="tab-content p-0">
+            <!-- Morris chart - Sales -->
+            <div class="row" style="overflow: auto;">
+              <kendo-grid #kendogridexpiryitems
+              [filter]="filter"
+              [filterable]="true"
+              (filterChange)="filterChangedetails($event)"
+  [kendoGridBinding]="gridExpiryView"
+        [pageSize]="10"
+        [pageable]="true"
+        [resizable]="true"
+        [sortable]="true"
+        [selectable]="true"
+        [height]="450"
+        [columnMenu]="{ filter: true }"
+      >
+      <ng-template kendoGridToolbarTemplate>
+          <button kendoGridPDFCommand icon="file-pdf">Export to PDF</button>
+          <button kendoGridExcelCommand icon="file-excel">Export to Excel</button>
+        </ng-template>
+      <!-- filter="numeric" -->
+    <kendo-grid-column [width]="200"
+    field="orgCode"
+    title="Org Code"
+  ></kendo-grid-column>
+  <kendo-grid-column [width]="250"
+  field="orgName"
+  title="Org Name"
+  ></kendo-grid-column>
+  <kendo-grid-column [width]="200"
+  field="locationCode"
+  title="Location Code"
+  ></kendo-grid-column>
+  <kendo-grid-column [width]="250"
+  field="locationName"
+  title="Location Name"
+  ></kendo-grid-column>
+  <kendo-grid-column [width]="200"
+  field="itemCode"
+  title="Item Code"
+  ></kendo-grid-column>
+  <kendo-grid-column [width]="250"
+  field="itemName"
+  title="Item Name"
+  ></kendo-grid-column>
+  <kendo-grid-column [width]="200"
+  field="loT_NUMBER"
+  title="LOT NUMBER"
+  ></kendo-grid-column>
+  <kendo-grid-column [width]="200"
+  field="expiratioN_DATE"
+  title="Expiration Date">
+  <ng-template kendoGridCellTemplate let-dataItem>
+    {{dataItem.expiratioN_DATE | date: 'dd-MM-yyyy'}}
+  </ng-template>
+</kendo-grid-column>
+  <kendo-grid-column [width]="200"
+  field="serialNo"
+  title="Serial No"
+></kendo-grid-column>
+        <kendo-grid-pdf
+        fileName="DepreciationSchedule.pdf"
+        [allPages]="true"
+        [repeatHeaders]="true"
+      ></kendo-grid-pdf>
+      <kendo-grid-excel
+      [fetchData]="allData"
+      fileName="DepreciationSchedule.xlsx"
+     
+    ></kendo-grid-excel>
+  </kendo-grid>
+            </div>
+          </div>
+        </div><!-- /.card-body -->
+      </div>
+    <!-- /.card -->
+
+  </section>
